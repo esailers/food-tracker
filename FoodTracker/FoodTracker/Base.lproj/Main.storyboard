@@ -87,7 +87,7 @@
                     <navigationItem key="navigationItem" title="Your Meals" id="SYr-no-GgO">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="Kbx-gt-zoe">
                             <connections>
-                                <segue destination="RJR-hD-nh3" kind="presentation" identifier="AddMeal" id="FbO-oy-BZb"/>
+                                <segue destination="RJR-hD-nh3" kind="presentation" identifier="segueToAddMeal" id="FbO-oy-BZb"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
