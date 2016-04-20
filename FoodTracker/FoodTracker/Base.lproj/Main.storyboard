@@ -151,12 +151,12 @@
                     <navigationItem key="navigationItem" title="New Meal" id="T7i-cT-P0B">
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="m5l-J8-jkA">
                             <connections>
-                                <action selector="cancel:" destination="BYZ-38-t0r" id="NQW-MI-xeq"/>
+                                <action selector="cancelMeal:" destination="BYZ-38-t0r" id="j1e-Xz-X9s"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="save" id="uGx-Dr-AHv">
                             <connections>
-                                <segue destination="hTs-O3-7Aj" kind="unwind" unwindAction="unwindToMealList:" id="eLl-Ya-3A3"/>
+                                <action selector="saveMeal:" destination="BYZ-38-t0r" id="Qxe-rJ-HmT"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -168,7 +168,6 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
-                <exit id="hTs-O3-7Aj" userLabel="Exit" sceneMemberID="exit"/>
                 <tapGestureRecognizer id="obw-ho-oen">
                     <connections>
                         <action selector="selectImageFromPhotoLibrary:" destination="BYZ-38-t0r" id="rTo-qd-jvb"/>

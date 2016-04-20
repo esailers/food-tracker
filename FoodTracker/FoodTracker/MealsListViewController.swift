@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MealsListViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class MealsListViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, MealViewControllerDelegate {
     
     // MARK: - Properties
     
@@ -122,13 +122,16 @@ class MealsListViewController: UIViewController, UITableViewDataSource, UITableV
                 mealDetailViewController.meal = selectedMeal
             }
         } else if segue.identifier == StoryboardSegue.kSegueToNewMeal {
-            print("Add new meal")
+            if let destination = segue.destinationViewController as? UINavigationController, mealVC = destination.topViewController as? MealViewController {
+                mealVC.delegate = self
+            }
         }
         
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
     }
     
+    /* Unwind segue disconnected in order to utilize a delegate for passing back data
     @IBAction func unwindToMealList(sender: UIStoryboardSegue) {
         if let sourceViewController = sender.sourceViewController as? MealViewController, meal = sourceViewController.meal {
             if let selectedIndexPath = tableView.indexPathForSelectedRow {
@@ -138,7 +141,22 @@ class MealsListViewController: UIViewController, UITableViewDataSource, UITableV
             }
             saveMeals()
         }
+    }
+    */
+    
+    // MARK: - MealViewControllerDelegate
+    
+    func didAddMeal(meal: Meal) {
+        dismissViewControllerAnimated(true, completion: nil)
         
+        if let selectedIndexPath = tableView.indexPathForSelectedRow {
+            meals[selectedIndexPath.row] = meal
+        } else {
+            meals.append(meal)
+        }
+        
+        self.saveMeals()
+        self.tableView.reloadData()
     }
     
     // MARK: - NSCoding

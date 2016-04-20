@@ -8,9 +8,15 @@
 
 import UIKit
 
+protocol MealViewControllerDelegate {
+    func didAddMeal(meal: Meal)
+}
+
 class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     // MARK: Properties
+    
+    var delegate: MealViewControllerDelegate?
     
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var photoImageView: UIImageView!
@@ -107,7 +113,7 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
         presentViewController(imagePickerController, animated: true, completion: nil)
     }
     
-    @IBAction func cancel(sender: UIBarButtonItem) {
+    @IBAction func cancelMeal(sender: UIBarButtonItem) {
         if isNewMeal {
             dismissViewControllerAnimated(true, completion: nil)
         } else {
@@ -116,8 +122,21 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
         
     }
     
+    @IBAction func saveMeal(sender: UIBarButtonItem) {
+        let name = nameTextField.text ?? ""
+        let photo = photoImageView.image
+        let rating = ratingControl.rating
+        
+        meal = Meal(name: name, photo: photo, rating: rating)
+        
+        if let meal = meal {
+            delegate?.didAddMeal(meal)
+        }
+    }
+    
     // MARK: - Navigation
     
+    /* Disconnected unwind segue to use delegate
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if saveButton === sender {
             let name = nameTextField.text ?? ""
@@ -127,6 +146,7 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
         }
         
     }
+    */
 
 }
 
