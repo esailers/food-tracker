@@ -36,6 +36,7 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
         
         isNewMeal = presentingViewController is UINavigationController
         if isNewMeal {
+            saveButton.enabled = false
             nameTextField.becomeFirstResponder()
         } else {
             navigationItem.leftBarButtonItem = nil
@@ -68,17 +69,27 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
         return true
     }
     
-    func textFieldDidBeginEditing(textField: UITextField) {
-        //saveButton.enabled = false
-    }
-    
     func textFieldDidEndEditing(textField: UITextField) {
         let text = nameTextField.text ?? ""
         navigationItem.title = text
     }
     
+    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
+        if let textFieldText = textField.text {
+            let textString = NSString.init(string: textFieldText)
+            let updatedText = textString.stringByReplacingCharactersInRange(range, withString: string)
+            
+            if isNewMeal {
+                saveButton.enabled = updatedText.isEmpty ? false : true
+            }
+            navigationItem.title = updatedText
+        }
+        
+        return true
+    }
+
     // MARK: UIImagePickerControllerDelegate
-    
+
     func imagePickerControllerDidCancel(picker: UIImagePickerController) {
         // Dismiss the picker if the user canceled.
         dismissViewControllerAnimated(true, completion: nil)
