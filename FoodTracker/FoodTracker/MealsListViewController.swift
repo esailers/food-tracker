@@ -120,15 +120,14 @@ class MealsListViewController: UIViewController, UITableViewDataSource, UITableV
             if let mealDetailViewController = segue.destinationViewController as? MealViewController, indexPath = tableView.indexPathForSelectedRow {
                 let selectedMeal = meals[indexPath.row]
                 mealDetailViewController.meal = selectedMeal
+                mealDetailViewController.delegate = self
             }
         } else if segue.identifier == StoryboardSegue.kSegueToNewMeal {
             if let destination = segue.destinationViewController as? UINavigationController, mealVC = destination.topViewController as? MealViewController {
                 mealVC.delegate = self
+                mealVC.isNewMeal = true
             }
         }
-        
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
     }
     
     /* Unwind segue disconnected in order to utilize a delegate for passing back data
@@ -147,8 +146,6 @@ class MealsListViewController: UIViewController, UITableViewDataSource, UITableV
     // MARK: - MealViewControllerDelegate
     
     func didAddMeal(meal: Meal) {
-        dismissViewControllerAnimated(true, completion: nil)
-        
         if let selectedIndexPath = tableView.indexPathForSelectedRow {
             meals[selectedIndexPath.row] = meal
         } else {

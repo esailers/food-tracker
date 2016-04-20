@@ -37,6 +37,9 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
         isNewMeal = presentingViewController is UINavigationController
         if isNewMeal {
             nameTextField.becomeFirstResponder()
+        } else {
+            navigationItem.leftBarButtonItem = nil
+            navigationItem.rightBarButtonItem = nil
         }
         
         if let meal = meal {
@@ -45,12 +48,14 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
             photoImageView.image = meal.photo
             ratingControl.rating = meal.rating
         }
-        
-        checkValidMealName()
     }
     
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
+        
+        if isNewMeal == false {
+            save()
+        }
         
         nameTextField.resignFirstResponder()
     }
@@ -64,17 +69,12 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
     }
     
     func textFieldDidBeginEditing(textField: UITextField) {
-        saveButton.enabled = false
+        //saveButton.enabled = false
     }
     
     func textFieldDidEndEditing(textField: UITextField) {
-        checkValidMealName()
-        navigationItem.title = nameTextField.text
-    }
-    
-    func checkValidMealName() {
         let text = nameTextField.text ?? ""
-        saveButton.enabled = !text.isEmpty
+        navigationItem.title = text
     }
     
     // MARK: UIImagePickerControllerDelegate
@@ -114,15 +114,15 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
     }
     
     @IBAction func cancelMeal(sender: UIBarButtonItem) {
-        if isNewMeal {
-            dismissViewControllerAnimated(true, completion: nil)
-        } else {
-            navigationController?.popViewControllerAnimated(true)
-        }
-        
+        dismissViewControllerAnimated(true, completion: nil)
     }
     
     @IBAction func saveMeal(sender: UIBarButtonItem) {
+        save()
+        dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func save() {
         let name = nameTextField.text ?? ""
         let photo = photoImageView.image
         let rating = ratingControl.rating
