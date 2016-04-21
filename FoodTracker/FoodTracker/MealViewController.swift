@@ -27,6 +27,8 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
     @IBOutlet weak var saveButton: UIBarButtonItem!
     
     var isNewMeal: Bool = false
+    
+    // MARK: - UIViewController lifecycle
 
     override func viewDidLoad() {
         super.viewDidLoad()

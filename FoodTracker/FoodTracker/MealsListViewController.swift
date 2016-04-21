@@ -103,7 +103,7 @@ class MealsListViewController: UIViewController, UITableViewDataSource, UITableV
     }
     
     func removeMeal(indexPath: NSIndexPath) {
-        self.meals.removeAtIndex(indexPath.row)
+        meals.removeAtIndex(indexPath.row)
         tableView.reloadData()
     }
     
