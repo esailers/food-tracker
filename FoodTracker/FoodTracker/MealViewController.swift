@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol MealViewControllerDelegate {
+protocol MealViewControllerDelegate: class {
     func didAddMeal(meal: Meal)
 }
 
@@ -16,7 +16,7 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
     
     // MARK: Properties
     
-    var delegate: MealViewControllerDelegate?
+    weak var delegate: MealViewControllerDelegate?
     
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var photoImageView: UIImageView!
